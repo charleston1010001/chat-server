@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 var path = require('path');
 var helmet = require('helmet');
@@ -22,8 +24,6 @@ router.use(function(req, res, next) {
     next();
 });
 
-//TODO: Websocket Verbindung zum Client und dann Client dynamisch einnen Queue Namen eingeben lassen.
-
 router.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.sendFile(path.join(__dirname + '/client/index.html'));
@@ -37,6 +37,10 @@ router.route('/send')
         res.json({message: 'Object received...'});
         serverSend.connect(req.body.message);
     });
+
+io.on('connection', function(socket) {
+   console.log('Connection established');
+});
 
 app.use('/api', router);
 
