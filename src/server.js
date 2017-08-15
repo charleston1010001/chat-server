@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var helmet = require('helmet');
 var serverSend = require('./serverSend');
+var serverWorkerOne = require('./serverWorkerOne');
+var serverWorkerTwo = require('./serverWorkerTwo');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,9 +22,13 @@ router.use(function(req, res, next) {
     next();
 });
 
+//TODO: Websocket Verbindung zum Client und dann Client dynamisch einnen Queue Namen eingeben lassen.
+
 router.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.sendFile(path.join(__dirname + '/client/index.html'));
+    serverWorkerOne.receive();
+    serverWorkerTwo.receive();
 });
 
 router.route('/send')

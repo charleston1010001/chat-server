@@ -12,4 +12,4 @@ exports.connect = function(msg) {
         });
         // setTimeout(function() { conn.close(); process.exit(0) }, 500);
     });
-}
+};
