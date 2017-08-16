@@ -39,10 +39,14 @@ router.route('/send')
     });
 
 io.on('connection', function(socket) {
-   console.log('Connection established');
+   console.log('Socket connection established');
+
+  socket.on('disconnect', function() {
+    console.log('Socket disconnected');
+  });
 });
 
 app.use('/api', router);
 
-app.listen(port);
+http.listen(port);
 console.log('Delivering to port ' + port);

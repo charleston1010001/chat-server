@@ -6,4 +6,6 @@ $(document).ready(function() {
           console.log(data);
        });
     });
+
+  var socket = io('');
 });

@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="client/index.css"/>
     <title>Message Queue Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 </head>
 <body>
-    <div>
+<div class="name">
+    <label for="nameinput">Name</label>
+    <input type="text" id="nameinput"/>
+    <button class="clickit">Set Name</button>
+</div>
+    <div class="message">
         <label for="textinput">Message</label>
         <input type="text" id="textinput"/>
         <button class="clickit">Click it!</button>
