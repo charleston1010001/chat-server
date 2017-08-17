@@ -19,6 +19,9 @@ var port = process.env.PORT || 8080;
 
 var router = express.Router();
 
+var rooms = {};
+var queues = {};
+
 router.use(function(req, res, next) {
     console.log('Logging request event...');
     next();
@@ -27,15 +30,13 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.sendFile(path.join(__dirname + '/client/index.html'));
-    serverWorkerOne.receive();
-    serverWorkerTwo.receive();
 });
 
 router.route('/send')
     .post(function(req, res) {
         console.log(req.body);
         res.json({message: 'Object received...'});
-        serverSend.connect(req.body.message);
+        serverSend.connect(req.body.message, req.body.receiver);
     });
 
 io.on('connection', function(socket) {
@@ -44,6 +45,17 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('Socket disconnected');
   });
+
+  socket.on('setPersonalRoom', function(data) {
+      console.log('connecting to room');
+      rooms[data.room] = data.room;
+      queues[data.queue] = data.queue;
+      socket.join(rooms[data.room]);
+      io.sockets.in(rooms[data.room])
+          .emit('sendToPersonalRoom', 'Connected to personal room ' + data.room + ' and created queue ' + data.queue + '...');
+      serverWorkerOne.receive(rooms[data.room], io);
+      serverWorkerTwo.receive(rooms[data.room], io);
+  })
 });
 
 app.use('/api', router);

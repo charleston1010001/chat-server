@@ -7,16 +7,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 </head>
 <body>
-<div class="name">
-    <label for="nameinput">Name</label>
-    <input type="text" id="nameinput"/>
-    <button class="clickit">Set Name</button>
-</div>
-    <div class="message">
+    <div class="setup">
+        <div style="margin-bottom: 20px;" class="name">
+            <label for="nameinput">Name</label>
+            <input type="text" id="nameinput"/>
+        </div>
+        <div style="margin-bottom: 20px;" class="receiver-name">
+            <label for="receivernameinput">Receiver</label>
+            <input type="text" id="receivernameinput"/>
+        </div>
+        <button class="start-chat">Chat</button>
+    </div>
+    <div style="margin-bottom: 20px;"  class="message">
         <label for="textinput">Message</label>
         <input type="text" id="textinput"/>
-        <button class="clickit">Click it!</button>
+        <button style="margin-bottom: 20px;" class="clickit">Click it!</button>
+        <div class="user-messages"></div>
     </div>
+    <div class="server-messages"></div>
 <script src="client/jquery-3.2.1.min.js"></script>
 <script src="client/index.js"></script>
 </body>
