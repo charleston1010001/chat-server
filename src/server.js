@@ -52,7 +52,9 @@ io.on('connection', function(socket) {
       queues[data.queue] = data.queue;
       socket.join(rooms[data.room]);
       io.sockets.in(rooms[data.room])
-          .emit('sendToPersonalRoom', 'Connected to personal room ' + data.room + ' and created queue ' + data.queue + '...');
+          .emit('sendToPersonalRoom', true);
+      // io.sockets.in(rooms[data.room])
+          // .emit('sendToPersonalRoom', 'Connected to personal room ' + data.room + ' and created queue ' + data.queue + '...');
       serverWorkerOne.receive(rooms[data.room], io);
       serverWorkerTwo.receive(rooms[data.room], io);
   })
