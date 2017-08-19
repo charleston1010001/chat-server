@@ -24,6 +24,10 @@ var queues = {};
 
 router.use(function(req, res, next) {
     console.log('Logging request event...');
+    res.setHeader('Access-Control-Allow-Origin', 'http://charleston001.ddns.net:6850');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    res.setHeader('Access-COntrol-Allow-Credentials', true);
     next();
 });
 
